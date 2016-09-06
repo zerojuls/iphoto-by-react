@@ -71,6 +71,8 @@ export default  class ImgFigure extends React.Component{
 - 将各个独立的部分封装成独立的组件
 
 **运行**
-`npm`
-`npm run dev`
+```
+npm
+npm run dev
+```
 浏览器访问`127.0.0.1:8080`可以看到效果
