@@ -3,7 +3,9 @@
  */
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './styles/main.scss'
+import ImgFigure from './components/imgfigure.jsx';
+import ControllerUnit from './components/controllerunit.jsx';
+import './styles/main.scss';
 
 //导入图片信息
 import images from './data/image.json';
@@ -27,97 +29,6 @@ var getRangeRandom=(low,high)=>Math.floor(Math.random() * (high-low)+low);
 //获取0~30°之间任意的正负值
 var  get30DegRandom=()=> (Math.random()>0.5?'':'-') + Math.floor(Math.random()*30);
 
-
-class ImgFigure extends React.Component{
-    constructor(props){
-        super(props);
-        this.handleClick=this.handleClick.bind(this);
-    }
-    /*
-    imgFigure的点击处理函数
-     */
-    handleClick(e){
-        if (this.props.arrange.isCenter){
-            this.props.inverse();
-        }else{
-            this.props.center();
-        }
-
-        e.stopPropagation();
-        e.preventDefault();
-    }
-
-    render(){
-        let styleObj={};
-        //如果props属性中指定了这张图片的位置，则使用
-        if (this.props.arrange.pos)
-        {
-            styleObj=this.props.arrange.pos;
-        }
-        //如果图片旋转角度不为0，添旋转角度
-        if (this.props.arrange.rotate)
-        {
-            styleObj['transform']='rotate('+this.props.arrange.rotate+'deg)';
-        }
-
-        if(this.props.arrange.isCenter){
-            styleObj.zIndex=11;
-        }
-        let imgFigureClassName="img-figure";
-        imgFigureClassName+=this.props.arrange.isInverse?' is-inverse':'';
-        return (
-            <figure className={imgFigureClassName} style={styleObj} onClick={this.handleClick}>
-                <img src={this.props.data.imageURL}
-                     alt={this.props.data.title}
-                />
-                <figcaption>
-                    <h2 className="img-title">{this.props.data.title}</h2>
-                    <div className="img-back" onClick={this.handleClick}>
-                        <p>
-                            {this.props.data.desc}
-                        </p>
-                    </div>
-                </figcaption>
-            </figure>
-        );
-    }
-};
-
-
-//控制组件
-class ControllerUnit extends  React.Component{
-    constructor(props){
-        super(props);
-        this.handleClick=this.handleClick.bind(this);
-    }
-    handleClick(e){
-        //如果点击的是当前正在选中态的按钮，则翻转图，否则对应图片居中
-        if(this.props.arrange.isCenter){
-            this.props.inverse();
-        }else{
-            this.props.center();
-        }
-        e.preventDefault();
-        e.stopPropagation();
-    }
-
-    render(){
-        var controllerUnitClassName="controller-unit";
-        //如果对应的是居中的图片，显示控制按钮的居中态
-        if (this.props.arrange.isCenter){
-            controllerUnitClassName+=" is-center";
-            //如果同时对应的是翻转图片，显示控制按钮的翻转态
-            if(this.props.arrange.isInverse){
-                controllerUnitClassName+=" is-inverse";
-            }
-        }
-        return (
-            <span className={controllerUnitClassName} onClick={this.handleClick}></span>
-        )
-
-    }
-
-};
 
 
 class  GalleryByReactApp extends React.Component{
