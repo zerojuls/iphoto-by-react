@@ -22,13 +22,11 @@ var imageDatas=(function genImageURL(imageDatasArr ) {
  * @param low
  * @param high
  */
-function getRangeRandom(low,high) {
-    return Math.floor(Math.random() * (high-low)+low);
-}
+var getRangeRandom=(low,high)=>Math.floor(Math.random() * (high-low)+low);
+
 //获取0~30°之间任意的正负值
-function get30DegRandom(low,high) {
-    return (Math.random()>0.5?'':'-') + Math.floor(Math.random()*30);
-}
+var  get30DegRandom=()=> (Math.random()>0.5?'':'-') + Math.floor(Math.random()*30);
+
 
 class ImgFigure extends React.Component{
     constructor(props){
@@ -166,9 +164,9 @@ class  GalleryByReactApp extends React.Component{
      * @return {Function}
      */
     center(index){
-        return function () {
+        return  ()=> {
             this.rearrange(index);
-        }.bind(this)
+        }
     }
 
     /**
@@ -177,14 +175,14 @@ class  GalleryByReactApp extends React.Component{
      * @return {Function}这是一个闭包函数，其内返回一个真正待被执行的函数
      */
     inverse(index){
-        return function () {
+        return ()=> {
             var imgsArrangeArr=this.state.imgsArrangeArr;
             imgsArrangeArr[index].isInverse=!imgsArrangeArr[index].isInverse;
             this.setState({
                 imgsArrangeArr:imgsArrangeArr
             });
 
-        }.bind(this)
+        }
     }
 
 
@@ -308,7 +306,7 @@ class  GalleryByReactApp extends React.Component{
     render(){
         let controllerUnits=[],
             imgFigures=[];
-        imageDatas.forEach(function (value,index) {
+        imageDatas.forEach((value,index)=> {
             if (!this.state.imgsArrangeArr[index]){
                 this.state.imgsArrangeArr[index]={
                     pos:{
@@ -323,7 +321,7 @@ class  GalleryByReactApp extends React.Component{
             }
            imgFigures.push(<ImgFigure key={index} data={value} ref={'imgFigure'+index} arrange={this.state.imgsArrangeArr[index]} inverse={this.inverse(index)} center={this.center(index)}/>);
             controllerUnits.push(<ControllerUnit key={index} arrange={this.state.imgsArrangeArr[index]} inverse={this.inverse(index)} center={this.center(index)}/>)
-        }.bind(this));
+        });
         return (
             <section className="stage" ref="stage">
                 <section className="img-sec">
